@@ -14,6 +14,7 @@ Thanks for your interest in contributing to I6P.
 - Keep changes focused and well-scoped.
 - Add/update tests when behavior changes.
 - Update documentation when public APIs change.
+- Use English for code, documentation, and commit messages.
 
 ## Design principles
 

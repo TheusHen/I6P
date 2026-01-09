@@ -8,7 +8,7 @@ This document summarizes, in an objective manner, what has already been implemen
 - Executable examples in `examples/`
 - CI in GitHub Actions with formatting, testing, vulnerability checking, and lint
 
-## Main deliverables (differentials)
+## Main deliverables (differentiators)
 
 ### Identity and authentication
 
@@ -53,5 +53,5 @@ This document summarizes, in an objective manner, what has already been implemen
 
 ## Recommended next step
 
-- Formalize and “freeze” a minimal public API (interfaces), decoupling the application from QUIC details.
+- Formalize and freeze a minimal public API (interfaces), decoupling the application from QUIC details.
 - Formal documentation of the handshake, messages, states, and API: see `docs/SPEC.md`.

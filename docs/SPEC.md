@@ -1,6 +1,6 @@
 # I6P — Specification (Handshake, Messages, States, and Public API)
 
-This document describes the **formal** behavior expected of I6P at the session/protocol level and proposes a **freezing public API** for consumption by applications.
+This document describes the **formal** behavior expected of I6P at the session/protocol level and proposes a **freezable public API** for consumption by applications.
 
 > Scope note: the current implementation covers the authenticated handshake (`HELLO`) and the base infrastructure (QUIC/TLS, identity, codec, crypto, and transfer). Some message types listed are **reserved** for protocol evolution.
 
@@ -138,7 +138,7 @@ When used, `crypto.SecureChannel` has:
 
 ## 5) Freezable public API (proposal)
 
-The idea of “freezable” is to provide a minimal, stable, and easy-to-version surface.
+The idea of "freezable" is to provide a minimal, stable, and easy-to-version surface.
 
 ### 5.1 Compatibility principles
 
@@ -154,11 +154,11 @@ The idea of “freezable” is to provide a minimal, stable, and easy-to-version
 package i6p
 
 import (
-    “context”
-    “io”
-    “net/netip”
+    "context"
+    "io"
+    "net/netip"
 
-    “github.com/TheusHen/I6P/i6p/identity”
+    "github.com/TheusHen/I6P/i6p/identity"
 )
 
 type PeerID = identity.PeerID
