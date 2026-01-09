@@ -20,7 +20,14 @@ jobs:
 
       - name: gofmt (check)
         run: |
-          test -z "$(gofmt -l .)"
+          bad="$(gofmt -l .)"
+          if [ -n "$bad" ]; then
+            echo "gofmt check failed. The following files need formatting:"
+            echo "$bad"
+            echo
+            echo "Fix locally with: make fmt"
+            exit 1
+          fi
 
       - name: go test
         run: go test ./...
