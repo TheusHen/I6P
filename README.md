@@ -4,7 +4,7 @@
 
 I6P is a **high-performance**, **IPv6-only** P2P connectivity and transport layer. It is **not** a torrent client—it provides the foundation upon which P2P applications can be built.
 
-## 🚀 Key Differentiators
+## Key Differentiators
 
 | Feature | Benefit |
 |---------|---------|

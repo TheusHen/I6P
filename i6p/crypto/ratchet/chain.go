@@ -114,11 +114,11 @@ func (c *Chain) Seal(plaintext, ad []byte) (EncryptedMessage, error) {
 
 // Receiver manages decryption with out-of-order tolerance.
 type Receiver struct {
-	mu       sync.Mutex
-	chains   map[uint64][32]byte // cached chain keys for skipped messages
-	current  [32]byte
+	mu         sync.Mutex
+	chains     map[uint64][32]byte // cached chain keys for skipped messages
+	current    [32]byte
 	currentGen uint64
-	maxSkip  int
+	maxSkip    int
 }
 
 // NewReceiver creates a receiver ratchet from the initial key.

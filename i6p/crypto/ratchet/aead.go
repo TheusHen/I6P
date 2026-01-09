@@ -75,5 +75,5 @@ func (a *AEAD) Open(ciphertext, additionalData []byte) ([]byte, error) {
 	return plaintext, nil
 }
 
-func (a *AEAD) Overhead() int { return a.aead.Overhead() }
+func (a *AEAD) Overhead() int  { return a.aead.Overhead() }
 func (a *AEAD) NonceSize() int { return chacha20poly1305.NonceSize }

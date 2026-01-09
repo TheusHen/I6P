@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	ErrTransferFailed      = errors.New("transfer: transfer failed")
+	ErrTransferFailed       = errors.New("transfer: transfer failed")
 	ErrIntegrityCheckFailed = errors.New("transfer: integrity check failed")
 )
 
@@ -78,7 +78,7 @@ func NewBulkSender(opener StreamOpener, config TransferConfig) *BulkSender {
 // Returns the Merkle root hash for integrity verification.
 func (bs *BulkSender) Send(ctx context.Context, data []byte) (merkleRoot []byte, err error) {
 	chunks := bs.chunker.Split(data)
-	
+
 	// Build Merkle tree
 	var hashes [][]byte
 	for _, c := range chunks {

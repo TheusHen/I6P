@@ -63,7 +63,7 @@ func main() {
 
 		// Receive data using bulk receiver
 		receiver := transfer.NewBulkReceiver(transfer.DefaultTransferConfig())
-		
+
 		for {
 			batch, err := transfer.ReadBatch(st)
 			if err != nil {
