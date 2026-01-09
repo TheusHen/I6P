@@ -26,7 +26,9 @@ func TestHandshakeClientServer(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Listen: %v", err)
 	}
-	defer ln.Close()
+	defer func() {
+		_ = ln.Close()
+	}()
 
 	addr := ln.AddrString()
 	if addr == "" {
