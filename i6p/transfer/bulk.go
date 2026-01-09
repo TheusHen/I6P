@@ -16,20 +16,20 @@ var (
 
 // TransferConfig configures a bulk transfer operation.
 type TransferConfig struct {
-	ChunkSize        int              // bytes per chunk (default: 256KB)
-	Compression      CompressionLevel // compression level
-	ErasureData      int              // data shards for erasure coding (0 = disabled)
-	ErasureParity    int              // parity shards for erasure coding
-	ParallelStreams  int              // number of parallel streams to use
-	ParallelWorkers  int              // number of worker goroutines
+	ChunkSize       int              // bytes per chunk (default: 256KB)
+	Compression     CompressionLevel // compression level
+	ErasureData     int              // data shards for erasure coding (0 = disabled)
+	ErasureParity   int              // parity shards for erasure coding
+	ParallelStreams int              // number of parallel streams to use
+	ParallelWorkers int              // number of worker goroutines
 }
 
 // DefaultTransferConfig returns sensible defaults for high-throughput transfers.
 func DefaultTransferConfig() TransferConfig {
 	return TransferConfig{
-		ChunkSize:       256 * 1024,  // 256 KB chunks
+		ChunkSize:       256 * 1024, // 256 KB chunks
 		Compression:     CompressionFast,
-		ErasureData:     0,           // disabled by default
+		ErasureData:     0, // disabled by default
 		ErasureParity:   0,
 		ParallelStreams: 8,
 		ParallelWorkers: 4,

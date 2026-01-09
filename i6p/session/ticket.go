@@ -12,9 +12,9 @@ import (
 )
 
 var (
-	ErrTicketExpired   = errors.New("session: ticket expired")
-	ErrTicketInvalid   = errors.New("session: ticket invalid")
-	ErrTicketNotFound  = errors.New("session: ticket not found")
+	ErrTicketExpired  = errors.New("session: ticket expired")
+	ErrTicketInvalid  = errors.New("session: ticket invalid")
+	ErrTicketNotFound = errors.New("session: ticket not found")
 )
 
 const (
