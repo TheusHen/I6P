@@ -1,6 +1,6 @@
 # I6P — IPv6 Peer-to-Peer Protocol (Go)
 
-[![CI](https://github.com/TheusHen/I6P/actions/workflows/ci.yml/badge.svg)](https://github.com/TheusHen/I6P/actions/workflows/ci.yml)
+[![ci](https://github.com/TheusHen/I6P/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/TheusHen/I6P/actions/workflows/ci.yml)
 
 I6P is a **high-performance**, **IPv6-only** P2P connectivity and transport layer. It is **not** a torrent client—it provides the foundation upon which P2P applications can be built.
 
