@@ -23,7 +23,7 @@ func Listen(addr string) (*Listener, error) {
 	return &Listener{inner: ln}, nil
 }
 
-func (l *Listener) Accept(ctx context.Context) (q.Connection, error) {
+func (l *Listener) Accept(ctx context.Context) (*q.Conn, error) {
 	return l.inner.Accept(ctx)
 }
 
@@ -38,7 +38,7 @@ func (l *Listener) AddrString() string {
 
 func (l *Listener) Close() error { return l.inner.Close() }
 
-func Dial(ctx context.Context, addr string) (q.Connection, error) {
+func Dial(ctx context.Context, addr string) (*q.Conn, error) {
 	tlsConf, err := NewClientTLSConfig()
 	if err != nil {
 		return nil, err

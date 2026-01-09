@@ -65,7 +65,9 @@ func (m *mockOpener) OpenStreamSync(ctx context.Context) (io.ReadWriteCloser, er
 func TestStreamPoolAcquireRelease(t *testing.T) {
 	opener := newMockOpener(4)
 	pool := NewStreamPool(opener, 4)
-	defer pool.Close()
+	defer func() {
+		_ = pool.Close()
+	}()
 
 	ctx := context.Background()
 

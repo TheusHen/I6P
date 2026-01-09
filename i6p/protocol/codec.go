@@ -20,6 +20,7 @@ var (
 
 // Frame is the basic wire container.
 // Format:
+//
 //	1 byte: type
 //	4 bytes: payload length (big endian)
 //	N bytes: payload

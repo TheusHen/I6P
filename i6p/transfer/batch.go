@@ -45,6 +45,7 @@ func (b *Batch) Size() int {
 
 // Encode serializes the batch for wire transmission.
 // Format:
+//
 //	4 bytes: magic
 //	4 bytes: chunk count
 //	For each chunk:

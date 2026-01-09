@@ -14,8 +14,8 @@ var (
 
 // Codec provides Reed-Solomon encoding/decoding.
 type Codec struct {
-	enc        reedsolomon.Encoder
-	dataShards int
+	enc          reedsolomon.Encoder
+	dataShards   int
 	parityShards int
 }
 

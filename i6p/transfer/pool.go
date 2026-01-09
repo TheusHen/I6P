@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	ErrPoolClosed     = errors.New("transfer: stream pool closed")
-	ErrPoolExhausted  = errors.New("transfer: no available streams")
+	ErrPoolClosed    = errors.New("transfer: stream pool closed")
+	ErrPoolExhausted = errors.New("transfer: no available streams")
 )
 
 // StreamOpener is the interface for opening new streams.
