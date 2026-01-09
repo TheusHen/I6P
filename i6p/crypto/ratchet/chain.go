@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	ErrRatchetExhausted = errors.New("ratchet: maximum generation reached")
+	ErrRatchetExhausted  = errors.New("ratchet: maximum generation reached")
 	ErrInvalidGeneration = errors.New("ratchet: invalid generation number")
 )
 

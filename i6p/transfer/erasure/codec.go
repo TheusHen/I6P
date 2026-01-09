@@ -7,8 +7,8 @@ import (
 )
 
 var (
-	ErrTooManyLost     = errors.New("erasure: too many shards lost, cannot recover")
-	ErrInvalidConfig   = errors.New("erasure: invalid data/parity configuration")
+	ErrTooManyLost       = errors.New("erasure: too many shards lost, cannot recover")
+	ErrInvalidConfig     = errors.New("erasure: invalid data/parity configuration")
 	ErrShardSizeMismatch = errors.New("erasure: shard sizes do not match")
 )
 

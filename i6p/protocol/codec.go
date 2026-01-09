@@ -20,9 +20,9 @@ var (
 
 // Frame is the basic wire container.
 // Format:
-//   1 byte  : type
-//   4 bytes : payload length (big endian)
-//   N bytes : payload
+//	1 byte: type
+//	4 bytes: payload length (big endian)
+//	N bytes: payload
 //
 // Frames are intended for a dedicated control stream.
 type Frame struct {

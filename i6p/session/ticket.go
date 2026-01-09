@@ -18,26 +18,26 @@ var (
 )
 
 const (
-	TicketKeySize = 32
+	TicketKeySize   = 32
 	TicketNonceSize = 16
-	TicketLifetime = 24 * time.Hour
+	TicketLifetime  = 24 * time.Hour
 )
 
 // Ticket enables fast session resumption without full handshake.
 // The ticket contains encrypted session state that only the issuer can decrypt.
 type Ticket struct {
-	ID        [16]byte // unique ticket identifier
-	IssuedAt  int64    // unix timestamp
-	ExpiresAt int64
-	PeerID    identity.PeerID
+	ID         [16]byte // unique ticket identifier
+	IssuedAt   int64    // unix timestamp
+	ExpiresAt  int64
+	PeerID     identity.PeerID
 	SessionKey [32]byte // pre-shared key for resumed session
 }
 
 // TicketStore manages session tickets for resumption.
 type TicketStore struct {
-	mu       sync.RWMutex
-	tickets  map[[16]byte]*Ticket
-	key      [TicketKeySize]byte // encryption key for ticket data
+	mu      sync.RWMutex
+	tickets map[[16]byte]*Ticket
+	key     [TicketKeySize]byte // encryption key for ticket data
 }
 
 // NewTicketStore creates a new ticket store.

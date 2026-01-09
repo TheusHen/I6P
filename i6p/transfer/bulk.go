@@ -56,10 +56,10 @@ func (s *TransferStats) CompressionRatio() float64 {
 
 // BulkSender handles sending large data efficiently.
 type BulkSender struct {
-	config   TransferConfig
-	pool     *StreamPool
-	stats    TransferStats
-	chunker  *Chunker
+	config  TransferConfig
+	pool    *StreamPool
+	stats   TransferStats
+	chunker *Chunker
 }
 
 // NewBulkSender creates a new bulk sender.

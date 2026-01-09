@@ -45,15 +45,15 @@ func (b *Batch) Size() int {
 
 // Encode serializes the batch for wire transmission.
 // Format:
-//   4 bytes: magic
-//   4 bytes: chunk count
-//   For each chunk:
-//     4 bytes: index
-//     1 byte:  compressed flag
-//     2 bytes: hash length
-//     N bytes: hash
-//     4 bytes: data length
-//     N bytes: data
+//	4 bytes: magic
+//	4 bytes: chunk count
+//	For each chunk:
+//		4 bytes: index
+//		1 byte: compressed flag
+//		2 bytes: hash length
+//		N bytes: hash
+//		4 bytes: data length
+//		N bytes: data
 func (b *Batch) Encode() ([]byte, error) {
 	size := b.Size()
 	if size > MaxBatchSize {

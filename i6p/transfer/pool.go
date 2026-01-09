@@ -21,12 +21,12 @@ type StreamOpener interface {
 // StreamPool manages a pool of parallel streams for high-throughput transfers.
 // Multiple streams can saturate the available bandwidth more effectively than a single stream.
 type StreamPool struct {
-	opener    StreamOpener
-	maxSize   int
-	streams   chan io.ReadWriteCloser
-	mu        sync.Mutex
-	closed    atomic.Bool
-	created   atomic.Int32
+	opener  StreamOpener
+	maxSize int
+	streams chan io.ReadWriteCloser
+	mu      sync.Mutex
+	closed  atomic.Bool
+	created atomic.Int32
 }
 
 // NewStreamPool creates a pool that can manage up to maxSize concurrent streams.
@@ -209,11 +209,11 @@ func (pw *ParallelWriter) Wait() error {
 
 // ParallelReader provides parallel chunk reception across multiple streams.
 type ParallelReader struct {
-	pool      *StreamPool
-	workers   int
+	pool       *StreamPool
+	workers    int
 	resultChan chan Chunk
-	errChan   chan error
-	wg        sync.WaitGroup
+	errChan    chan error
+	wg         sync.WaitGroup
 }
 
 // NewParallelReader creates a reader that receives chunks in parallel.
