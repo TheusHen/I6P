@@ -24,8 +24,10 @@ func main() {
 	}
 
 	log.Println("1. Ephemeral X25519 keys generated")
-	log.Printf("   Alice public: %x...", alice.LocalEphemeralPublic()[:8])
-	log.Printf("   Bob public:   %x...", bob.LocalEphemeralPublic()[:8])
+	alicePub := alice.LocalEphemeralPublic()
+	bobPub := bob.LocalEphemeralPublic()
+	log.Printf("   Alice public: %x...", alicePub[:8])
+	log.Printf("   Bob public:   %x...", bobPub[:8])
 
 	// Exchange public keys (in real usage, sent over the wire)
 	if err := alice.Complete(bob.LocalEphemeralPublic()); err != nil {

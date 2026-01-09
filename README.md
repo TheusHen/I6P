@@ -1,5 +1,7 @@
 # I6P — IPv6 Peer-to-Peer Protocol (Go)
 
+[![CI](https://github.com/TheusHen/I6P/actions/workflows/ci.yml/badge.svg)](https://github.com/TheusHen/I6P/actions/workflows/ci.yml)
+
 I6P is a **high-performance**, **IPv6-only** P2P connectivity and transport layer. It is **not** a torrent client—it provides the foundation upon which P2P applications can be built.
 
 ## 🚀 Key Differentiators
@@ -65,6 +67,20 @@ go test -bench=. ./...
 # Run example
 go run ./examples/basic
 ```
+
+## CI (GitHub Actions)
+
+The `ci` workflow runs on push and pull requests:
+
+- `gofmt` (format check)
+- `go test ./...`
+- `govulncheck ./...`
+- `golangci-lint`
+
+## Docs
+
+- Results: [docs/RESULTS.md](docs/RESULTS.md)
+- Spec (Handshake/Messages/States/API): [docs/SPEC.md](docs/SPEC.md)
 
 ## Performance
 

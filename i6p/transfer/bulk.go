@@ -162,9 +162,7 @@ func (bs *BulkSender) SendReader(ctx context.Context, r io.Reader) (merkleRoot [
 }
 
 // Stats returns transfer statistics.
-func (bs *BulkSender) Stats() TransferStats {
-	return bs.stats
-}
+func (bs *BulkSender) Stats() *TransferStats { return &bs.stats }
 
 // Close closes the sender and releases resources.
 func (bs *BulkSender) Close() error {
@@ -277,9 +275,7 @@ func (br *BulkReceiver) Assemble(expectedRoot []byte) ([]byte, error) {
 }
 
 // Stats returns receiver statistics.
-func (br *BulkReceiver) Stats() TransferStats {
-	return br.stats
-}
+func (br *BulkReceiver) Stats() *TransferStats { return &br.stats }
 
 // QuickHash computes SHA-256 of data (utility function).
 func QuickHash(data []byte) []byte {

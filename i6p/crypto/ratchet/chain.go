@@ -5,8 +5,6 @@ import (
 	"encoding/binary"
 	"errors"
 	"sync"
-
-	"github.com/TheusHen/I6P/i6p/crypto"
 )
 
 var (
@@ -59,7 +57,7 @@ func (c *Chain) deriveKeys() ([32]byte, [32]byte) {
 
 // Step advances the ratchet and returns an AEAD cipher for the current message.
 // The chain key is immediately updated, providing forward secrecy.
-func (c *Chain) Step() (*crypto.AEAD, uint64, error) {
+func (c *Chain) Step() (*AEAD, uint64, error) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
@@ -76,7 +74,7 @@ func (c *Chain) Step() (*crypto.AEAD, uint64, error) {
 
 	// Zeroize old key material is automatic since we replaced it
 
-	aead, err := crypto.NewAEAD(msgKey[:])
+	aead, err := NewAEAD(msgKey[:])
 	if err != nil {
 		return nil, 0, err
 	}
@@ -159,10 +157,26 @@ func (r *Receiver) Open(msg EncryptedMessage, ad []byte) ([]byte, error) {
 
 	gen := msg.Generation
 
+	// Expected next message in-order.
+	if gen == r.currentGen {
+		nextChain, msgKey := deriveKeysStatic(r.current)
+		aead, err := NewAEAD(msgKey[:])
+		if err != nil {
+			return nil, err
+		}
+		pt, err := aead.Open(msg.Ciphertext, ad)
+		if err != nil {
+			return nil, err
+		}
+		r.current = nextChain
+		r.currentGen++
+		return pt, nil
+	}
+
 	// Check if we have a cached key for this generation
 	if cachedKey, ok := r.chains[gen]; ok {
 		_, msgKey := deriveKeysStatic(cachedKey)
-		aead, err := crypto.NewAEAD(msgKey[:])
+		aead, err := NewAEAD(msgKey[:])
 		if err != nil {
 			return nil, err
 		}
@@ -188,7 +202,7 @@ func (r *Receiver) Open(msg EncryptedMessage, ad []byte) ([]byte, error) {
 		r.current = nextChain
 		r.currentGen = gen + 1
 
-		aead, err := crypto.NewAEAD(msgKey[:])
+		aead, err := NewAEAD(msgKey[:])
 		if err != nil {
 			return nil, err
 		}
