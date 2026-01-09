@@ -19,7 +19,7 @@ type HandshakeOptions struct {
 
 // HandshakeClient performs the I6P session handshake as a client.
 // The client opens a dedicated control stream.
-func HandshakeClient(ctx context.Context, conn q.Connection, kp identity.KeyPair, opts HandshakeOptions) (*Session, error) {
+func HandshakeClient(ctx context.Context, conn *q.Conn, kp identity.KeyPair, opts HandshakeOptions) (*Session, error) {
 	control, err := conn.OpenStreamSync(ctx)
 	if err != nil {
 		return nil, err
@@ -71,7 +71,7 @@ func HandshakeClient(ctx context.Context, conn q.Connection, kp identity.KeyPair
 
 // HandshakeServer performs the I6P session handshake as a server.
 // The server accepts a dedicated control stream (opened by the client).
-func HandshakeServer(ctx context.Context, conn q.Connection, kp identity.KeyPair, opts HandshakeOptions) (*Session, error) {
+func HandshakeServer(ctx context.Context, conn *q.Conn, kp identity.KeyPair, opts HandshakeOptions) (*Session, error) {
 	control, err := conn.AcceptStream(ctx)
 	if err != nil {
 		return nil, err
