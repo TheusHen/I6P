@@ -117,5 +117,5 @@ Production-ready baseline implementation. The discovery layer is intentionally m
 
 ## License
 
-MIT
+MPL-2.0
 
