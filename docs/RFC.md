@@ -45,7 +45,7 @@ QUIC/TLS 1.3 provides hop-to-hop confidentiality and integrity for all streams, 
 ### 5.3 Optional End-to-End Secure Channel
 
 - Ephemeral X25519 key exchange derives two traffic keys via HKDF-SHA256.
-- Traffic keys feed a symmetric ratchet using ChaCha20-Poly1305 AEAD with a maximum out-of-order tolerance of **1000** messages **per receive chain**. Each receive chain tracks monotonically increasing generation numbers; the receiver remembers the highest accepted generation and accepts ciphertexts whose generation lies within `[highest-1000, highest]`. Accepting a new message advances `highest` and slides the window; ciphertexts outside the window fail decryption and are discarded.
+- Traffic keys feed a symmetric ratchet using ChaCha20-Poly1305 AEAD with a maximum out-of-order tolerance of **1000** messages **per receive chain**. Each receive chain tracks monotonically increasing generation numbers and remembers the highest accepted value. The receiver accepts ciphertexts whose generation lies within `[highest-1000, highest]`. Accepting a new message advances `highest` and slides the window. Ciphertexts outside the window fail decryption and are discarded.
 - Initiators send with the initiator-derived key; responders send with the responder-derived key.
 - Application data MAY be additionally wrapped with this secure channel using associated data defined by the application.
 
@@ -158,7 +158,7 @@ Application streams **MUST NOT** be opened before **ESTABLISHED**. The control s
 - Ticket lifetime: **24 hours** (`TicketLifetime`).
 - Ticket ID: **16 bytes** random.
 - Stored payload (80 bytes): `PeerID (32)` || `IssuedAt (8)` || `ExpiresAt (8)` || `SessionKey (32)`.
-- Encoding: AEAD seal with a 32-byte store key (`TicketKeySize`) using the ticket ID as **associated data**. Format: `ticket_id(16)` || `aead_output`, where `aead_output = nonce(12) || ciphertext || tag`. The nonce (4-byte random prefix + 8-byte counter, big-endian) is auto-generated and prepended by `AEAD.Seal`; the ticket ID is not used for nonce derivation.
+- Encoding: AEAD seal with a 32-byte store key (`TicketKeySize`) using the ticket ID as **associated data**. Format: `ticket_id(16)` || `aead_output`. `aead_output` is `nonce(12) || ciphertext || tag`, with the nonce constructed as a 4-byte random prefix plus an 8-byte big-endian counter. The nonce is auto-generated and prepended by `AEAD.Seal`; the ticket ID never influences nonce generation.
 - Servers **MAY** share the 32-byte store key to enable clustered validation.
 - Expired tickets **MUST** be rejected; revoked tickets are deleted from the store.
 
@@ -188,10 +188,10 @@ Application streams **MUST NOT** be opened before **ESTABLISHED**. The control s
 ### 10.4 Batching
 
 - Batches group multiple (possibly compressed) chunks:
-    - Magic: `0x49365042` (`"I6PB"`).
-    - Layout: `magic (4)` || `chunk_count (4)` || for **each chunk**: `index (4)` || `compressed (1)` || `hash_len (2)` || `hash` || `data_len (4)` || `data`.
-    - All multi-byte integer fields are encoded in big-endian order.
-    - Maximum serialized batch size: **4 MiB** (`MaxBatchSize`). Larger batches **MUST** be rejected.
+  - Magic: `0x49365042` (`"I6PB"`).
+  - Layout: `magic (uint32)` || `chunk_count (uint32)` || for **each chunk**: `index (uint32)` || `compressed (uint8: 0 or 1)` || `hash_len (uint16)` || `hash (hash_len bytes)` || `data_len (uint32)` || `data (data_len bytes)`.
+  - All multi-byte integer fields are encoded in big-endian order; `hash_len` **SHOULD** match the actual hash length (e.g., 32 for SHA-256).
+  - Maximum serialized batch size: **4 MiB** (`MaxBatchSize`). Larger batches **MUST** be rejected.
 - Batches are length-prefixed (`uint32` big-endian) when written to streams.
 
 ### 10.5 Parallel Streams (Pool)
