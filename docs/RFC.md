@@ -45,7 +45,7 @@ QUIC/TLS 1.3 provides hop-to-hop confidentiality and integrity for all streams, 
 ### 5.3 Optional End-to-End Secure Channel
 
 - Ephemeral X25519 key exchange derives two traffic keys via HKDF-SHA256.
-- Traffic keys feed a symmetric ratchet using ChaCha20-Poly1305 AEAD with a maximum out-of-order tolerance of **1000** messages on the receive chain.
+- Traffic keys feed a symmetric ratchet using ChaCha20-Poly1305 AEAD with a maximum out-of-order tolerance of **1000** messages **per receive chain**. Messages that fall outside this receive window fail decryption and are discarded.
 - Initiators send with the initiator-derived key; responders send with the responder-derived key.
 - Application data MAY be additionally wrapped with this secure channel using associated data defined by the application.
 
@@ -158,7 +158,7 @@ Application streams **MUST NOT** be opened before **ESTABLISHED**. The control s
 - Ticket lifetime: **24 hours** (`TicketLifetime`).
 - Ticket ID: **16 bytes** random.
 - Stored payload (80 bytes): `PeerID (32)` || `IssuedAt (8)` || `ExpiresAt (8)` || `SessionKey (32)`.
-- Encoding: AEAD seal with a 32-byte store key (`TicketKeySize`) using the ticket ID as nonce prefix; format: `ticket_id (16)` || `nonce (16)` || `ciphertext`.
+- Encoding: AEAD seal with a 32-byte store key (`TicketKeySize`) using the ticket ID as **associated data**. Format: `ticket_id (16)` || `nonce (12)` || `ciphertext || tag`. The nonce is generated internally by the AEAD and is not derived from the ticket ID.
 - Servers **MAY** share the 32-byte store key to enable clustered validation.
 - Expired tickets **MUST** be rejected; revoked tickets are deleted from the store.
 
@@ -189,7 +189,7 @@ Application streams **MUST NOT** be opened before **ESTABLISHED**. The control s
 
 - Batches group multiple (possibly compressed) chunks:
   - Magic: `0x49365042` (`"I6PB"`).
-  - Layout: `magic (4)` | `chunk_count (4)` | repeated `index (4)` | `compressed (1)` | `hash_len (2)` | `hash` | `data_len (4)` | `data`.
+  - Layout: `magic (4)` | `chunk_count (4)` | for **each chunk**: `index (4)` | `compressed (1)` | `hash_len (2)` | `hash` | `data_len (4)` | `data`.
   - Maximum serialized batch size: **4 MiB** (`MaxBatchSize`). Larger batches **MUST** be rejected.
 - Batches are length-prefixed (`uint32` big-endian) when written to streams.
 
