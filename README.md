@@ -80,6 +80,7 @@ The `ci` workflow runs on push and pull requests:
 ## Docs
 
 - Results: [docs/RESULTS.md](docs/RESULTS.md)
+- RFC (full protocol): [docs/RFC.md](docs/RFC.md)
 - Spec (Handshake/Messages/States/API): [docs/SPEC.md](docs/SPEC.md)
 
 ## Performance
@@ -118,4 +119,3 @@ Production-ready baseline implementation. The discovery layer is intentionally m
 ## License
 
 MPL-2.0
-
