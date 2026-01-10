@@ -187,7 +187,7 @@ Application streams **MUST NOT** be opened before **ESTABLISHED**. The control s
 
 ### 10.4 Batching
 
-  - Batches group multiple (possibly compressed) chunks:
+- Batches group multiple (possibly compressed) chunks:
     - Magic: `0x49365042` (`"I6PB"`).
     - Layout: `magic (4)` || `chunk_count (4)` || for **each chunk**: `index (4)` || `compressed (1)` || `hash_len (2)` || `hash` || `data_len (4)` || `data`.
     - All multi-byte integer fields are encoded in big-endian order.
